@@ -8,8 +8,18 @@
     </p>
   </div>
   <div class="col-md-8">
-     <%= link_to "Edit this recipe", edit_recipe_path(@recipe), class: "btn btn-success pull-right" %>
-    <h3><%= @recipe.summary %></h3>
+    <div class="row">
+      <div class="col-md-7">
+         <h3><%= @recipe.summary %></h3>
+      </div>
+      <div class="col-md-2">
+        <%= link_to "Edit this recipe", edit_recipe_path(@recipe), class: "btn btn-success pull-right" %>
+      </div>
+      <div class="col-md-2">
+        <%= link_to "Delete this recipe", @recipe, method: :delete, data: { confirm: 'Are you sure?' }  , class: "btn btn-success" %>
+      </div>
+    </div>
+   
     <div class="show_recipe">
       <%= image_tag(@recipe.picture.url, class: "gravatar") if @recipe.picture? %>
     </div>
@@ -18,6 +28,14 @@
         <strong>Steps:</strong>
       </p>
       <%= simple_format(@recipe.description) %>
+      <div class="pull-right">
+        <%= link_to like_recipe_path(@recipe, like: true), method: :post do %>
+          <i class="glyphicon glyphicon-thumbs-up"></i> &nbsp <%= @recipe.thumbs_up_total %>
+        <% end %> &nbsp&nbsp&nbsp&nbsp
+        <%= link_to like_recipe_path(@recipe, like: false), method: :post do %>
+          <i class="glyphicon glyphicon-thumbs-down"></i> &nbsp <%= @recipe.thumbs_down_total %>
+        <% end %>
+      </div>
     </div>
   </div>
 </div>
