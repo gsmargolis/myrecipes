@@ -2,7 +2,7 @@
 
 <div class="row">
   <div class="col-md-4 pull-right center">
-    <%= gravatar_for @recipe.chef, size: 200 %>
+    <%= link_to gravatar_for(@recipe.chef, size: 200), chef_path(@recipe.chef) %>
     <p>
       <h5>Brought to you by: <%= @recipe.chef.chefname %></h5>
     </p>
@@ -12,12 +12,14 @@
       <div class="col-md-7">
          <h3><%= @recipe.summary %></h3>
       </div>
-      <div class="col-md-2">
-        <%= link_to "Edit this recipe", edit_recipe_path(@recipe), class: "btn btn-success pull-right" %>
-      </div>
-      <div class="col-md-2">
-        <%= link_to "Delete this recipe", @recipe, method: :delete, data: { confirm: 'Are you sure?' }  , class: "btn btn-success" %>
-      </div>
+      <% if logged_in? and @recipe.chef == current_user %>
+        <div class="col-md-2">
+          <%= link_to "Edit this recipe", edit_recipe_path(@recipe), class: "btn btn-success pull-right" %>
+        </div>
+        <div class="col-md-2">
+          <%= link_to "Delete this recipe", @recipe, method: :delete, data: { confirm: 'Are you sure?' }  , class: "btn btn-success" %>
+        </div>
+      <% end %>
     </div>
    
     <div class="show_recipe">

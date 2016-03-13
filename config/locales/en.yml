@@ -21,3 +21,8 @@
 
 en:
   hello: "Hello world"
+  
+  helpers:
+    label:
+      chef:
+        chefname: "Chef Name"
