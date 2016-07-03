@@ -12,7 +12,7 @@ class ChefsController < ApplicationController
   end
   
   
-  def create
+  def create  #Curl>curlssl --insecure -X POST -H "Content-Type:application/json" -d "{\"chef\": {\"chefname\": \"blablabla\",\"email\": \"dummy@xxx.com\",\"password\": \"123456\"}}" https://recipemanager-gmargolis.c9users.io/chefs.json
     @chef = Chef.new(chef_params)
     p = params
     Rails.logger.debug p["gsmfield"]
