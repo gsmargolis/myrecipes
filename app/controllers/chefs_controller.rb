@@ -17,9 +17,17 @@ class ChefsController < ApplicationController
     if @chef.save
       flash[:success] = "Your account was registered successfully"
       session[:chef_id] = @chef.id
+      respond_to do |format|
+        format.html #{ @recipes = Recipe.paginate(page: params[:page], per_page: 4) }
+        format.json { render :json => @chef }
+      end
       redirect_to recipes_path
     else
-      render :new
+      respond_to do |format|
+        format.html {render :new}
+        format.json { render :json => { "error" => "Bad" } }
+      end
+      
     end
   
   end
