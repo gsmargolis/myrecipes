@@ -4,7 +4,12 @@ class RecipesController < ApplicationController
   before_action :require_same_user, only: [:edit, :update]
 
   def index
-    @recipes = Recipe.paginate(page: params[:page], per_page: 4)
+    #@recipes = Recipe.paginate(page: params[:page], per_page: 4)
+    
+    respond_to do |format|
+      format.html { @recipes = Recipe.paginate(page: params[:page], per_page: 4) }
+      format.json { render :json => Recipe.all }
+    end
   end
   
   def show
