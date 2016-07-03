@@ -1,4 +1,5 @@
 class ChefsController < ApplicationController
+  protect_from_forgery unless: -> { request.format.json? }
   before_action :set_chef, only: [:edit, :update, :show]
   before_action :require_same_user, only: [:edit, :update]
   
@@ -13,7 +14,8 @@ class ChefsController < ApplicationController
   
   def create
     @chef = Chef.new(chef_params)
-    
+    p = params
+    Rails.logger.debug p["gsmfield"]
     if @chef.save
       flash[:success] = "Your account was registered successfully"
       session[:chef_id] = @chef.id
@@ -25,7 +27,10 @@ class ChefsController < ApplicationController
     else
       respond_to do |format|
         format.html {render :new}
-        format.json { render :json => { "error" => "Bad" } }
+        format.json do 
+          h = {"status" => "bad"}
+          render :json => h 
+        end
       end
       
     end
